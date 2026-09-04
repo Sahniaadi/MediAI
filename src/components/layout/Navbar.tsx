@@ -75,24 +75,25 @@ export const Navbar: React.FC = () => {
         <div
           style={{
             background: 'linear-gradient(90deg, #0d9488 0%, #0284c7 100%)',
-            padding: '0.4rem 1rem',
+            padding: '0.4rem 0.75rem',
             color: 'white',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             fontSize: 'var(--font-xs)',
-            fontWeight: 600
+            fontWeight: 600,
+            overflowX: 'auto'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ opacity: 0.9 }}>Switch Portal View:</span>
-            <div style={{ display: 'flex', gap: '0.35rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
+            <span style={{ opacity: 0.9, whiteSpace: 'nowrap' }} className="role-label-full">Switch View:</span>
+            <div style={{ display: 'flex', gap: '0.3rem' }}>
               {(
                 [
-                  { id: 'patient', label: 'Patient', icon: User },
-                  { id: 'doctor', label: 'Doctor', icon: Stethoscope },
-                  { id: 'partner', label: 'Pharmacy/Lab Partner', icon: Building2 },
-                  { id: 'admin', label: 'Admin', icon: Shield }
+                  { id: 'patient', label: 'Patient', shortLabel: 'Patient', icon: User },
+                  { id: 'doctor', label: 'Doctor', shortLabel: 'Doctor', icon: Stethoscope },
+                  { id: 'partner', label: 'Partner', shortLabel: 'Partner', icon: Building2 },
+                  { id: 'admin', label: 'Admin', shortLabel: 'Admin', icon: Shield }
                 ] as const
               ).map((roleItem) => {
                 const Icon = roleItem.icon;
@@ -101,30 +102,28 @@ export const Navbar: React.FC = () => {
                   <button
                     key={roleItem.id}
                     onClick={() => handleRoleChange(roleItem.id)}
+                    title={roleItem.label}
                     style={{
                       background: isSelected ? 'rgba(255, 255, 255, 0.28)' : 'rgba(0, 0, 0, 0.15)',
                       color: 'white',
-                      padding: '0.2rem 0.6rem',
+                      padding: '0.25rem 0.55rem',
                       borderRadius: 'var(--radius-full)',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '0.3rem',
                       border: isSelected ? '1px solid rgba(255, 255, 255, 0.6)' : '1px solid transparent',
                       fontWeight: isSelected ? 700 : 500,
-                      transition: 'all 0.15s ease'
+                      transition: 'all 0.15s ease',
+                      minHeight: '30px',
+                      whiteSpace: 'nowrap'
                     }}
                   >
-                    <Icon size={12} />
-                    <span>{roleItem.label}</span>
+                    <Icon size={13} />
+                    <span className="role-btn-label">{roleItem.shortLabel}</span>
                   </button>
                 );
               })}
             </div>
-          </div>
-
-          <div style={{ display: 'none', alignItems: 'center', gap: '0.4rem' }}>
-            <Sparkles size={12} />
-            <span>AI Health Engine Active</span>
           </div>
         </div>
 
@@ -181,23 +180,25 @@ export const Navbar: React.FC = () => {
               </div>
             </div>
 
-            {/* Location Pill */}
+            {/* Location Pill - hidden on very small screens */}
             <button
               onClick={() => setIsLocationModalOpen(true)}
+              className="location-pill"
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.4rem',
-                padding: '0.4rem 0.75rem',
+                padding: '0.4rem 0.65rem',
                 background: 'var(--surface-hover)',
                 borderRadius: 'var(--radius-full)',
                 border: '1px solid var(--border-subtle)',
                 fontSize: 'var(--font-xs)',
-                color: 'var(--text-secondary)'
+                color: 'var(--text-secondary)',
+                minHeight: '36px'
               }}
             >
               <MapPin size={13} color="var(--primary)" />
-              <span style={{ fontWeight: 600 }}>{currentCity}</span>
+              <span style={{ fontWeight: 600 }} className="location-text">{currentCity}</span>
               <ChevronDown size={12} />
             </button>
           </div>
@@ -272,7 +273,8 @@ export const Navbar: React.FC = () => {
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
                       boxShadow: 'var(--shadow-lg)',
-                      minWidth: '220px',
+                      minWidth: '200px',
+                      maxWidth: 'min(220px, 90vw)',
                       zIndex: 200,
                       overflow: 'hidden',
                       animation: 'fadeIn 0.15s ease'
@@ -387,7 +389,8 @@ export const Navbar: React.FC = () => {
                     border: '1px solid var(--border-subtle)',
                     borderRadius: 'var(--radius-md)',
                     boxShadow: 'var(--shadow-lg)',
-                    minWidth: '220px',
+                    minWidth: '200px',
+                    maxWidth: 'min(220px, 90vw)',
                     zIndex: 200,
                     overflow: 'hidden',
                     animation: 'fadeIn 0.15s ease'
@@ -530,11 +533,32 @@ export const Navbar: React.FC = () => {
         </div>
       )}
 
-      {/* Style for responsive search form on desktop */}
+      {/* Style for responsive navbar */}
       <style jsx global>{`
         @media (min-width: 768px) {
           .md-search-form {
             display: block !important;
+          }
+        }
+        /* Role label text — hide on very small screens */
+        @media (max-width: 400px) {
+          .role-btn-label {
+            display: none;
+          }
+          .role-label-full {
+            display: none;
+          }
+        }
+        /* Location text — hide on small screens */
+        @media (max-width: 480px) {
+          .location-text {
+            display: none;
+          }
+        }
+        /* Location pill — hidden below 360px */
+        @media (max-width: 359px) {
+          .location-pill {
+            display: none !important;
           }
         }
       `}</style>

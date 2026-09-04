@@ -140,13 +140,21 @@ html {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent horizontal overflow at root */
+  overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg-page);
   color: var(--text-main);
   overflow-x: hidden;
+}
+
+img, svg, video {
+  max-width: 100%;
+  height: auto;
 }
 
 button, input, select, textarea {
@@ -173,10 +181,12 @@ a {
 
 .app-wrapper {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   background: var(--bg-page);
   position: relative;
+  overflow-x: hidden;
 }
 
 .app-main {
@@ -184,7 +194,14 @@ a {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: 1.25rem 1rem 6.5rem 1rem;
+  /* Mobile: extra bottom padding for BottomNav */
+  padding: 1rem 0.875rem 6.5rem 0.875rem;
+}
+
+@media (min-width: 480px) {
+  .app-main {
+    padding: 1.25rem 1rem 6.5rem 1rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -193,7 +210,55 @@ a {
   }
 }
 
-/* Glassmorphism Card System */
+/* ==========================================================================
+   Responsive Grid Utilities
+   ========================================================================== */
+
+/* 1 col → 2 col at md */
+.grid-responsive-1-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .grid-responsive-1-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 1 col → 2 col → 3 col */
+.grid-responsive-1-2-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 480px) {
+  .grid-responsive-1-2-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 900px) {
+  .grid-responsive-1-2-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 2 col → 4 col stats */
+.grid-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+@media (min-width: 768px) {
+  .grid-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Glassmorphism Card System
+   ========================================================================== */
+
 .med-card {
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
@@ -203,6 +268,9 @@ a {
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   position: relative;
   overflow: hidden;
+  /* Prevent card overflow from breaking layout */
+  min-width: 0;
+  word-break: break-word;
 }
 
 .med-card:hover {
@@ -223,7 +291,10 @@ a {
   border: 1px solid var(--border-glass);
 }
 
-/* Primary Action Buttons */
+/* ==========================================================================
+   Primary Action Buttons
+   ========================================================================== */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -236,6 +307,9 @@ a {
   line-height: 1.25;
   transition: all 0.2s ease;
   user-select: none;
+  /* Touch friendly minimum target */
+  min-height: 44px;
+  white-space: nowrap;
 }
 
 .btn-primary {
@@ -287,6 +361,7 @@ a {
   padding: 0.45rem 0.8rem;
   font-size: var(--font-xs);
   border-radius: var(--radius-xs);
+  min-height: 36px;
 }
 
 .btn-lg {
@@ -295,7 +370,15 @@ a {
   border-radius: var(--radius-md);
 }
 
-/* Badges */
+/* Full-width button utility */
+.btn-full {
+  width: 100%;
+}
+
+/* ==========================================================================
+   Badges
+   ========================================================================== */
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -305,6 +388,8 @@ a {
   font-size: var(--font-xs);
   font-weight: 600;
   line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .badge-primary {
@@ -332,7 +417,10 @@ a {
   color: #1d4ed8;
 }
 
-/* Input Fields */
+/* ==========================================================================
+   Input Fields
+   ========================================================================== */
+
 .input-control {
   width: 100%;
   padding: 0.75rem 1rem;
@@ -340,7 +428,8 @@ a {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   color: var(--text-main);
-  font-size: var(--font-sm);
+  /* Prevent zoom on iOS when font < 16px */
+  font-size: max(16px, var(--font-sm));
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -348,6 +437,31 @@ a {
 .input-control:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+/* ==========================================================================
+   Overflow-safe wrappers
+   ========================================================================== */
+
+/* Horizontally scrollable table wrapper */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+/* Prevent text overflow in containers */
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* Word wrap for dynamic content */
+.word-break {
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 /* ==========================================================================
@@ -411,7 +525,10 @@ a {
   animation: fadeIn 0.25s ease-out forwards;
 }
 
-/* Modal Overlay */
+/* ==========================================================================
+   Modal System — Mobile-First Sheet Pattern
+   ========================================================================== */
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -419,41 +536,93 @@ a {
   backdrop-filter: blur(6px);
   z-index: 999;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  padding: 1rem;
+  padding: 0;
+}
+
+@media (min-width: 640px) {
+  .modal-overlay {
+    align-items: center;
+    padding: 1rem;
+  }
 }
 
 .modal-content {
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   width: 100%;
-  max-width: 580px;
-  max-height: 90vh;
+  max-width: 100%;
+  max-height: 92dvh;
+  max-height: 92vh;
   overflow-y: auto;
   box-shadow: var(--shadow-lg);
-  animation: fadeIn 0.25s ease-out;
-  padding: 1.5rem;
+  animation: slideSheetUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 1.25rem;
+  /* Safe area for iPhone notch */
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+  /* Drag handle feel */
+  position: relative;
 }
 
-/* Floating Emergency SOS Button */
+/* Drag handle indicator on mobile modals */
+.modal-content::before {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 4px;
+  background: var(--border-strong);
+  border-radius: 2px;
+  margin: 0 auto 1rem auto;
+}
+
+@media (min-width: 640px) {
+  .modal-content {
+    border-radius: var(--radius-lg);
+    max-width: 580px;
+    animation: fadeIn 0.25s ease-out;
+    padding: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  .modal-content::before {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Floating Emergency SOS Button
+   ========================================================================== */
+
 .sos-floating-pill {
   position: fixed;
   bottom: 5.5rem;
-  right: 1.25rem;
+  right: 1rem;
   z-index: 90;
   background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
   color: white;
-  padding: 0.75rem 1.25rem;
+  padding: 0.65rem 1rem;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   font-weight: 700;
   font-size: var(--font-sm);
   box-shadow: 0 4px 20px var(--emergency-glow), 0 0 0 2px rgba(255, 255, 255, 0.3);
   transition: all 0.2s ease;
+  /* Ensure minimum touch target */
+  min-height: 44px;
+}
+
+/* Hide SOS text on very small screens — icon only */
+.sos-floating-pill .sos-text {
+  display: none;
+}
+
+@media (min-width: 380px) {
+  .sos-floating-pill .sos-text {
+    display: inline;
+  }
 }
 
 .sos-floating-pill:hover {
@@ -465,10 +634,17 @@ a {
   .sos-floating-pill {
     bottom: 2rem;
     right: 2rem;
+    padding: 0.75rem 1.25rem;
+  }
+  .sos-floating-pill .sos-text {
+    display: inline;
   }
 }
 
-/* Scrollbars */
+/* ==========================================================================
+   Scrollbars
+   ========================================================================== */
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -482,4 +658,26 @@ a {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
+}
+
+/* ==========================================================================
+   Responsive Typography Helpers
+   ========================================================================== */
+
+.heading-responsive {
+  font-size: clamp(1.25rem, 5vw, 1.875rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.subheading-responsive {
+  font-size: clamp(1rem, 3.5vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Safe-area padding for bottom nav overlap */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }

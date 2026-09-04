@@ -164,11 +164,11 @@ Thank you for trusting MediAI Pharmacy!`;
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
       {/* Top Header & Tab Switcher */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.8rem' }}>
-        <div>
-          <h2 style={{ fontSize: 'var(--font-2xl)', fontWeight: 800, color: 'var(--text-main)' }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <h2 style={{ fontSize: 'clamp(1.15rem, 4vw, 1.5rem)', fontWeight: 800, color: 'var(--text-main)' }}>
             MediAI Pharmacy Store
           </h2>
-          <p style={{ fontSize: 'var(--font-sm)', color: 'var(--text-muted)' }}>
+          <p style={{ fontSize: 'var(--font-sm)', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
             100% Genuine prescription drugs, generic alternatives, and express 2-hour doorstep delivery.
           </p>
         </div>
@@ -273,7 +273,7 @@ Thank you for trusting MediAI Pharmacy!`;
           </div>
 
           {/* Medicines Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(260px, 100%), 1fr))', gap: '1rem' }}>
             {medicines.map((med) => (
               <div
                 key={med.id}
@@ -371,7 +371,7 @@ Thank you for trusting MediAI Pharmacy!`;
 
       {/* TAB 2: SHOPPING CART & CHECKOUT */}
       {activeTab === 'cart' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(320px, 100%), 1fr))', gap: '1.5rem' }}>
           {/* Cart Items List */}
           <div className="med-card">
             <h3 style={{ fontSize: 'var(--font-lg)', fontWeight: 800, marginBottom: '1rem' }}>

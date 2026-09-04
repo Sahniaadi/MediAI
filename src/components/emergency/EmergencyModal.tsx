@@ -105,9 +105,9 @@ export const EmergencyModal: React.FC = () => {
         className="modal-content"
         onClick={(e) => e.stopPropagation()}
         style={{
-          maxWidth: '680px',
+          maxWidth: 'min(680px, 95vw)',
           border: '2px solid var(--emergency-red)',
-          padding: '1.5rem',
+          padding: '1.25rem',
           background: 'var(--surface-card)'
         }}
       >
@@ -161,9 +161,9 @@ export const EmergencyModal: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '1rem',
-            margin: '1.25rem 0'
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(200px, 100%), 1fr))',
+            gap: '0.85rem',
+            margin: '1rem 0'
           }}
         >
           {/* 911 Direct Call */}

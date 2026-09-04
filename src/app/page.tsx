@@ -70,7 +70,7 @@ function AppContent() {
         title="Trigger Emergency SOS"
       >
         <AlertTriangle size={20} className="anim-heartbeat" />
-        <span>EMERGENCY SOS</span>
+        <span className="sos-text">EMERGENCY SOS</span>
       </button>
 
       {/* Floating Onboarding Tour Trigger */}
@@ -79,7 +79,7 @@ function AppContent() {
         style={{
           position: 'fixed',
           bottom: '5.5rem',
-          left: '1.25rem',
+          left: '1rem',
           zIndex: 80,
           background: 'var(--surface-glass)',
           backdropFilter: 'blur(12px)',
@@ -92,12 +92,13 @@ function AppContent() {
           boxShadow: 'var(--shadow-sm)',
           display: 'flex',
           alignItems: 'center',
-          gap: '0.4rem'
+          gap: '0.4rem',
+          minHeight: '44px'
         }}
         className="onboarding-guide-btn"
       >
         <Sparkles size={14} />
-        <span>App Tour & Auth</span>
+        <span className="onboarding-text">App Tour & Auth</span>
       </button>
 
       {/* Global Modals & Drawers */}
@@ -115,6 +116,11 @@ function AppContent() {
           .onboarding-guide-btn {
             bottom: 2rem !important;
             left: 2rem !important;
+          }
+        }
+        @media (max-width: 379px) {
+          .onboarding-text {
+            display: none;
           }
         }
       `}</style>

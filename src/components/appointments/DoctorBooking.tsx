@@ -132,13 +132,13 @@ export const DoctorBooking: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
       {/* Header & Sub-tab Switcher */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.8rem' }}>
-        <div>
-          <h2 style={{ fontSize: 'var(--font-2xl)', fontWeight: 800, color: 'var(--text-main)' }}>
-            Doctor Consultations & Telehealth
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.8rem' }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <h2 style={{ fontSize: 'clamp(1.15rem, 4vw, 1.5rem)', fontWeight: 800, color: 'var(--text-main)' }}>
+            Doctor Consultations &amp; Telehealth
           </h2>
-          <p style={{ fontSize: 'var(--font-sm)', color: 'var(--text-muted)' }}>
-            Book in-clinic appointments or secure HD video consultations with top verified medical specialists.
+          <p style={{ fontSize: 'var(--font-sm)', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+            Book in-clinic or secure HD video consultations with verified medical specialists.
           </p>
         </div>
 
@@ -186,7 +186,7 @@ export const DoctorBooking: React.FC = () => {
       {activeSubTab === 'find' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {/* Search Bar */}
-          <div style={{ position: 'relative', maxWidth: '480px' }}>
+          <div style={{ position: 'relative', width: '100%', maxWidth: '480px' }}>
             <Search size={16} style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
             <input
               type="text"
@@ -221,7 +221,7 @@ export const DoctorBooking: React.FC = () => {
           </div>
 
           {/* Doctors Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(320px, 100%), 1fr))', gap: '1rem' }}>
             {filteredDoctors.map((doc) => (
               <div
                 key={doc.id}
@@ -289,7 +289,9 @@ export const DoctorBooking: React.FC = () => {
                     paddingTop: '0.8rem',
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    gap: '0.75rem'
                   }}
                 >
                   <div>
@@ -456,7 +458,7 @@ export const DoctorBooking: React.FC = () => {
             </div>
 
             {/* Date & Slot Picker */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem', marginBottom: '1.2rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.8rem', marginBottom: '1.2rem' }} className="booking-date-grid">
               <div>
                 <label style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', display: 'block', marginBottom: '0.2rem' }}>
                   Appointment Date
@@ -487,6 +489,14 @@ export const DoctorBooking: React.FC = () => {
               </div>
             </div>
 
+            <style jsx global>{`
+              @media (min-width: 480px) {
+                .booking-date-grid {
+                  grid-template-columns: 1fr 1fr !important;
+                }
+              }
+            `}</style>
+
             {/* Reason / Chief Complaint */}
             <div style={{ marginBottom: '1.25rem' }}>
               <label style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', display: 'block', marginBottom: '0.2rem' }}>
@@ -506,11 +516,11 @@ export const DoctorBooking: React.FC = () => {
               🛡️ <strong>100% Free Cancellation Guarantee:</strong> Cancel up to 2 hours before scheduled slot for full automatic refund.
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.6rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.6rem', flexWrap: 'wrap' }}>
               <button onClick={() => setBookingDoctor(null)} className="btn btn-secondary">
                 Cancel
               </button>
-              <button onClick={handleConfirmBooking} className="btn btn-primary">
+              <button onClick={handleConfirmBooking} className="btn btn-primary" style={{ flex: 1, minWidth: '180px' }}>
                 Confirm Booking (${consultType === 'video' ? bookingDoctor.videoFee : bookingDoctor.inPersonFee})
               </button>
             </div>

@@ -38,7 +38,8 @@ export const BottomNav: React.FC = () => {
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
         borderTop: '1px solid var(--border-subtle)',
-        boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.08)'
+        boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.08)',
+        paddingBottom: 'env(safe-area-inset-bottom, 0px)'
       }}
     >
       <div
@@ -48,7 +49,7 @@ export const BottomNav: React.FC = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-around',
-          padding: '0.45rem 0.5rem'
+          padding: '0.4rem 0.25rem'
         }}
       >
         {navItems.map((item) => {
@@ -65,14 +66,15 @@ export const BottomNav: React.FC = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: '0.15rem',
-                  marginTop: '-1.25rem',
-                  background: 'none'
+                  marginTop: '-1.1rem',
+                  background: 'none',
+                  padding: '0 0.25rem'
                 }}
               >
                 <div
                   style={{
-                    width: '48px',
-                    height: '48px',
+                    width: '46px',
+                    height: '46px',
                     borderRadius: '50%',
                     background: 'linear-gradient(135deg, var(--primary) 0%, #0284c7 100%)',
                     color: 'white',
@@ -82,11 +84,11 @@ export const BottomNav: React.FC = () => {
                     boxShadow: '0 6px 16px var(--primary-glow), 0 0 0 3px var(--surface-card)'
                   }}
                 >
-                  <Icon size={24} />
+                  <Icon size={22} />
                 </div>
                 <span
                   style={{
-                    fontSize: '11px',
+                    fontSize: '10px',
                     fontWeight: 700,
                     color: isActive ? 'var(--primary)' : 'var(--text-secondary)'
                   }}
@@ -105,16 +107,19 @@ export const BottomNav: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '0.2rem',
+                gap: '0.15rem',
                 position: 'relative',
-                padding: '0.35rem 0.6rem',
+                padding: '0.3rem 0.4rem',
                 borderRadius: 'var(--radius-sm)',
                 color: isActive ? 'var(--primary)' : 'var(--text-muted)',
-                transition: 'color 0.15s ease'
+                transition: 'color 0.15s ease',
+                minWidth: '44px',
+                minHeight: '44px',
+                justifyContent: 'center'
               }}
             >
               <div style={{ position: 'relative' }}>
-                <Icon size={20} strokeWidth={isActive ? 2.4 : 1.8} />
+                <Icon size={19} strokeWidth={isActive ? 2.4 : 1.8} />
                 {item.badge !== undefined && (
                   <span
                     style={{
@@ -137,7 +142,7 @@ export const BottomNav: React.FC = () => {
                   </span>
                 )}
               </div>
-              <span style={{ fontSize: '11px', fontWeight: isActive ? 700 : 500 }}>
+              <span style={{ fontSize: '10px', fontWeight: isActive ? 700 : 500, lineHeight: 1 }}>
                 {item.label}
               </span>
             </button>

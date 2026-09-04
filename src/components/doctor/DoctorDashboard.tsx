@@ -164,7 +164,7 @@ export const DoctorDashboard: React.FC = () => {
           gap: '1rem'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', flexWrap: 'wrap' }}>
           <div
             style={{
               width: '64px',
@@ -217,7 +217,7 @@ export const DoctorDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Doctor Tabs Switcher */}
+      {/* Doctor Tabs Switcher - Scrollable on Mobile */}
       <div
         style={{
           display: 'flex',
@@ -225,7 +225,9 @@ export const DoctorDashboard: React.FC = () => {
           background: 'var(--surface-card)',
           padding: '0.35rem',
           borderRadius: 'var(--radius-sm)',
-          border: '1px solid var(--border-subtle)'
+          border: '1px solid var(--border-subtle)',
+          overflowX: 'auto',
+          WebkitOverflowScrolling: 'touch' as any
         }}
       >
         {[
@@ -243,7 +245,9 @@ export const DoctorDashboard: React.FC = () => {
               fontSize: 'var(--font-xs)',
               fontWeight: 700,
               background: activeDoctorTab === tab.id ? 'var(--primary-light)' : 'transparent',
-              color: activeDoctorTab === tab.id ? 'var(--primary)' : 'var(--text-secondary)'
+              color: activeDoctorTab === tab.id ? 'var(--primary)' : 'var(--text-secondary)',
+              whiteSpace: 'nowrap',
+              flexShrink: 0
             }}
           >
             {tab.label}

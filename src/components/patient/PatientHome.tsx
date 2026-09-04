@@ -101,17 +101,17 @@ export const PatientHome: React.FC = () => {
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'flex-end',
+          alignItems: 'flex-start',
           flexWrap: 'wrap',
-          gap: '0.5rem'
+          gap: '0.75rem'
         }}
       >
-        <div>
-          <h1 style={{ fontSize: 'var(--font-2xl)', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <h1 style={{ fontSize: 'clamp(1.25rem, 5vw, 1.75rem)', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', wordBreak: 'break-word' }}>
             Hello, {activeFamilyMember?.name || patientProfile?.fullName || 'Aditya'} 👋
           </h1>
-          <p style={{ fontSize: 'var(--font-sm)', color: 'var(--text-muted)' }}>
-            Welcome back to your comprehensive AI medical center.
+          <p style={{ fontSize: 'var(--font-sm)', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+            Welcome back to your AI medical center.
           </p>
         </div>
 
@@ -125,12 +125,13 @@ export const PatientHome: React.FC = () => {
             alignItems: 'center',
             gap: '0.5rem',
             background: 'var(--surface-card)',
-            boxShadow: 'var(--shadow-xs)'
+            boxShadow: 'var(--shadow-xs)',
+            flexShrink: 0
           }}
         >
           <TrendingUp size={16} color="var(--primary)" />
           <span style={{ fontSize: 'var(--font-xs)', fontWeight: 600, color: 'var(--text-secondary)' }}>
-            Medication Adherence:
+            Adherence:
           </span>
           <span style={{ fontSize: 'var(--font-sm)', fontWeight: 800, color: 'var(--primary)' }}>
             {adherenceRate}%
@@ -167,9 +168,10 @@ export const PatientHome: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-            gap: '0.75rem'
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '0.6rem'
           }}
+          className="quick-actions-grid"
         >
           {[
             { id: 'ai', label: t('askAI'), icon: Bot, color: '#0d9488' },
@@ -188,43 +190,53 @@ export const PatientHome: React.FC = () => {
                 style={{
                   background: 'var(--surface-card)',
                   border: '1px solid var(--border-subtle)',
-                  padding: '0.9rem 0.8rem',
+                  padding: '0.85rem 0.5rem',
                   borderRadius: 'var(--radius-md)',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: '0.45rem',
-                  boxShadow: 'var(--shadow-xs)'
+                  gap: '0.4rem',
+                  boxShadow: 'var(--shadow-xs)',
+                  width: '100%'
                 }}
               >
                 <div
                   style={{
-                    width: '36px',
-                    height: '36px',
+                    width: '34px',
+                    height: '34px',
                     borderRadius: '10px',
                     background: `${action.color}15`,
                     color: action.color,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    flexShrink: 0
                   }}
                 >
-                  <Icon size={20} />
+                  <Icon size={19} />
                 </div>
-                <span style={{ fontSize: 'var(--font-xs)', fontWeight: 700, color: 'var(--text-main)', textAlign: 'center' }}>
+                <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', textAlign: 'center', lineHeight: 1.3 }}>
                   {action.label}
                 </span>
               </button>
             );
           })}
         </div>
+
+        <style jsx global>{`
+          @media (min-width: 600px) {
+            .quick-actions-grid {
+              grid-template-columns: repeat(6, 1fr) !important;
+            }
+          }
+        `}</style>
       </div>
 
       {/* Grid: Live Dashboard Cards */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(320px, 100%), 1fr))',
           gap: '1.25rem'
         }}
       >
@@ -268,7 +280,9 @@ export const PatientHome: React.FC = () => {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  border: '1px solid var(--border-subtle)'
+                  border: '1px solid var(--border-subtle)',
+                  gap: '0.5rem',
+                  flexWrap: 'wrap'
                 }}
               >
                 <div>

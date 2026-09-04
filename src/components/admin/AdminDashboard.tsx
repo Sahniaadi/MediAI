@@ -146,7 +146,7 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {/* KPI Cards Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.8rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem' }} className="admin-kpi-grid">
         <div className="med-card" style={{ padding: '1rem' }}>
           <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Registered Patients</div>
           <div style={{ fontSize: 'var(--font-xl)', fontWeight: 800, color: 'var(--primary)', marginTop: '0.2rem' }}>
@@ -183,7 +183,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Tab Switcher */}
+      {/* Tab Switcher - Scrollable on Mobile */}
       <div
         style={{
           display: 'flex',
@@ -191,7 +191,9 @@ export const AdminDashboard: React.FC = () => {
           background: 'var(--surface-card)',
           padding: '0.35rem',
           borderRadius: 'var(--radius-sm)',
-          border: '1px solid var(--border-subtle)'
+          border: '1px solid var(--border-subtle)',
+          overflowX: 'auto',
+          WebkitOverflowScrolling: 'touch' as any
         }}
       >
         {[
@@ -209,7 +211,9 @@ export const AdminDashboard: React.FC = () => {
               fontSize: 'var(--font-xs)',
               fontWeight: 700,
               background: activeTab === tab.id ? 'var(--primary-light)' : 'transparent',
-              color: activeTab === tab.id ? 'var(--primary)' : 'var(--text-secondary)'
+              color: activeTab === tab.id ? 'var(--primary)' : 'var(--text-secondary)',
+              whiteSpace: 'nowrap',
+              flexShrink: 0
             }}
           >
             {tab.label}
@@ -219,7 +223,7 @@ export const AdminDashboard: React.FC = () => {
 
       {/* TAB 1: OVERVIEW */}
       {activeTab === 'metrics' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(320px, 100%), 1fr))', gap: '1rem' }}>
           <div className="med-card">
             <h3 style={{ fontSize: 'var(--font-md)', fontWeight: 800, marginBottom: '0.8rem' }}>
               System Health & Architecture Telemetry
@@ -380,6 +384,19 @@ export const AdminDashboard: React.FC = () => {
           </div>
         </div>
       )}
+
+      <style jsx global>{`
+        @media (min-width: 768px) {
+          .admin-kpi-grid {
+            grid-template-columns: repeat(5, 1fr) !important;
+          }
+        }
+        @media (min-width: 480px) and (max-width: 767px) {
+          .admin-kpi-grid {
+            grid-template-columns: repeat(3, 1fr) !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };

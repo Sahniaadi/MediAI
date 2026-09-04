@@ -134,13 +134,13 @@ export const MedicineManagement: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
       {/* Header & Controls */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.8rem' }}>
-        <div>
-          <h2 style={{ fontSize: 'var(--font-2xl)', fontWeight: 800, color: 'var(--text-main)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.8rem' }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <h2 style={{ fontSize: 'clamp(1.15rem, 4vw, 1.5rem)', fontWeight: 800, color: 'var(--text-main)' }}>
             My Medicines & Adherence
           </h2>
-          <p style={{ fontSize: 'var(--font-sm)', color: 'var(--text-muted)' }}>
-            Track active schedules, dose adherence streaks, and automated refill depletion forecasts.
+          <p style={{ fontSize: 'var(--font-sm)', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+            Track active schedules, dose adherence, and refill forecasts.
           </p>
         </div>
 
@@ -170,7 +170,7 @@ export const MedicineManagement: React.FC = () => {
           border: '1px solid var(--border-subtle)'
         }}
       >
-        <div style={{ display: 'flex', gap: '0.4rem' }}>
+        <div style={{ display: 'flex', gap: '0.4rem', overflowX: 'auto', flexShrink: 0 }}>
           {(
             [
               { id: 'reminders', label: 'Active Medicines' },
@@ -207,7 +207,7 @@ export const MedicineManagement: React.FC = () => {
 
       {/* VIEW 1: ACTIVE REMINDERS */}
       {activeView === 'reminders' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(320px, 100%), 1fr))', gap: '1rem' }}>
           {reminders.map((rem) => {
             const hasGeneric = rem.medicineName.includes('Atorvastatin') || rem.medicineName.includes('Metformin');
             const isLow = rem.remainingQuantity <= 8;

@@ -201,7 +201,7 @@ export const AIAssistant: React.FC = () => {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        height: 'calc(100vh - 170px)',
+        height: 'calc(100dvh - 160px)',
         maxHeight: '850px',
         background: 'var(--surface-card)',
         borderRadius: 'var(--radius-lg)',
@@ -213,49 +213,51 @@ export const AIAssistant: React.FC = () => {
       {/* AI Header */}
       <div
         style={{
-          padding: '0.85rem 1.25rem',
+          padding: '0.75rem 1rem',
           borderBottom: '1px solid var(--border-subtle)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          background: 'var(--surface-hover)'
+          gap: '0.5rem',
+          background: 'var(--surface-hover)',
+          flexWrap: 'wrap'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flex: 1, minWidth: 0 }}>
           <div
             style={{
-              width: '38px',
-              height: '38px',
-              borderRadius: '12px',
+              width: '36px',
+              height: '36px',
+              borderRadius: '10px',
               background: 'linear-gradient(135deg, var(--primary) 0%, #0284c7 100%)',
               color: 'white',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 12px var(--primary-glow)'
+              boxShadow: '0 4px 12px var(--primary-glow)',
+              flexShrink: 0
             }}
           >
-            <Bot size={22} />
+            <Bot size={20} />
           </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <span style={{ fontWeight: 800, fontSize: 'var(--font-md)' }}>MediAI Clinical Assistant</span>
+          <div style={{ minWidth: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+              <span style={{ fontWeight: 800, fontSize: 'var(--font-sm)' }}>MediAI Clinical Assistant</span>
               <span className="badge badge-success" style={{ fontSize: '10px' }}>Online</span>
             </div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-              Medical Triage & Prescription Intelligence • Active Language: {language}
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              Medical Triage &amp; Prescription AI
             </div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.4rem' }}>
+        <div style={{ display: 'flex', gap: '0.4rem', flexShrink: 0 }}>
           <button
             onClick={handleExportChat}
             className="btn btn-secondary btn-sm"
             title="Export Consultation"
           >
             <Download size={14} />
-            <span style={{ display: 'none' }}>Export</span>
           </button>
           <button
             onClick={handleClearChat}
@@ -338,7 +340,7 @@ export const AIAssistant: React.FC = () => {
               <div
                 style={{
                   maxWidth: '82%',
-                  padding: '0.9rem 1.15rem',
+                  padding: '0.85rem 1rem',
                   borderRadius: 'var(--radius-md)',
                   background: isAI
                     ? isEmergency
@@ -349,7 +351,10 @@ export const AIAssistant: React.FC = () => {
                   border: isEmergency ? '1.5px solid var(--emergency-red)' : '1px solid var(--border-subtle)',
                   fontSize: 'var(--font-sm)',
                   lineHeight: 1.6,
-                  boxShadow: 'var(--shadow-xs)'
+                  boxShadow: 'var(--shadow-xs)',
+                  wordBreak: 'break-word',
+                  overflowWrap: 'anywhere',
+                  minWidth: 0
                 }}
               >
                 {isEmergency && (
@@ -553,12 +558,14 @@ export const AIAssistant: React.FC = () => {
       {/* Chat Input Bar */}
       <div
         style={{
-          padding: '0.75rem 1rem',
+          padding: '0.65rem 0.75rem',
           borderTop: '1px solid var(--border-subtle)',
           display: 'flex',
           alignItems: 'center',
-          gap: '0.5rem',
-          background: 'var(--surface-card)'
+          gap: '0.4rem',
+          background: 'var(--surface-card)',
+          position: 'sticky',
+          bottom: 0
         }}
       >
         {/* Attachment triggers */}
@@ -567,7 +574,13 @@ export const AIAssistant: React.FC = () => {
             cursor: 'pointer',
             padding: '0.5rem',
             borderRadius: 'var(--radius-xs)',
-            color: 'var(--text-muted)'
+            color: 'var(--text-muted)',
+            minWidth: '40px',
+            minHeight: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0
           }}
           title="Attach Image or Report"
         >
@@ -596,7 +609,13 @@ export const AIAssistant: React.FC = () => {
             padding: '0.5rem',
             borderRadius: 'var(--radius-xs)',
             color: isListening ? 'var(--emergency-red)' : 'var(--text-muted)',
-            background: isListening ? 'var(--emergency-light)' : 'transparent'
+            background: isListening ? 'var(--emergency-light)' : 'transparent',
+            minWidth: '40px',
+            minHeight: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0
           }}
           title={isListening ? 'Stop Listening' : 'Voice Input (Speech-to-Text)'}
         >
@@ -605,7 +624,7 @@ export const AIAssistant: React.FC = () => {
 
         <input
           type="text"
-          placeholder={isListening ? 'Listening to your voice...' : 'Type medical questions, symptoms, or medication queries...'}
+          placeholder={isListening ? 'Listening...' : 'Type symptoms or ask a question...'}
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
@@ -614,7 +633,9 @@ export const AIAssistant: React.FC = () => {
             flex: 1,
             borderRadius: 'var(--radius-full)',
             background: 'var(--surface-hover)',
-            border: isListening ? '1.5px solid var(--emergency-red)' : '1px solid var(--border-subtle)'
+            border: isListening ? '1.5px solid var(--emergency-red)' : '1px solid var(--border-subtle)',
+            minWidth: 0,
+            fontSize: '16px'
           }}
         />
 
@@ -626,7 +647,8 @@ export const AIAssistant: React.FC = () => {
             height: '40px',
             padding: 0,
             borderRadius: '50%',
-            flexShrink: 0
+            flexShrink: 0,
+            minHeight: 'unset'
           }}
           title="Send Query"
         >
